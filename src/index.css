@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.header-1 {
+  font-family: 'Flama Light', proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 38px;
+  font-style: normal;
+  font-weight: 100;
+  letter-spacing: normal;
+  line-height: 44px;
+  text-transform: none;
+  color: black;
+}
+.content-1 {
+  font-family: 'Avenir Roman', proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  letter-spacing: normal;
+  line-height: 26px;
+  text-transform: none;
+  color: #4E4E4E;
+}
+.content-2 {
+  font-family: 'Avenir Roman', proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  letter-spacing: normal;
+  line-height: 26px;
+  text-transform: none;
+  color: #4E4E4E;
+}
