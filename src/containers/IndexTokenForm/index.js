@@ -6,7 +6,7 @@ import TokenQuantity from '../TokenQuantity';
 import TokenSummary from '../TokenSummary';
 import FundSelection from '../FundSelection';
 import IssueApproval from '../IssueApproval';
-// import IssueTransfer from '../IssueTransfer';
+import IssueTransfer from '../IssueTransfer';
 
 import {
   input,
@@ -111,12 +111,11 @@ class IndexTokenForm extends Component {
           nextStep={this.nextStep}
           previousStep={this.previousStep}
         />      
-      // case 7: 
-      //   return <IssueTransfer
-      //     saveData={this.saveData}
-      //     nextStep={this.nextStep}
-      //     previousStep={this.previousStep}
-      //   />      
+      case 7: 
+        return <IssueTransfer
+          selectedFund={this.state.selectedIndexFund}
+          previousStep={this.previousStep}
+        />      
     }
   }
 }
