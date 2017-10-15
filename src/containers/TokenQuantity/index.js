@@ -16,7 +16,9 @@ class TokenQuantity extends Component {
   }
 
   handleQuantityChange(index, e) {
-    var newValue = e.target.value;
+    if (!e.target.value ) return;
+
+    var newValue = parseInt(e.target.value);
 
     var currentUnits = this.props.units;
     currentUnits[index] = newValue;

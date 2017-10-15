@@ -4,6 +4,7 @@ import TokenName from '../TokenName';
 import TokenSelection from '../TokenSelection';
 import TokenQuantity from '../TokenQuantity';
 import TokenSummary from '../TokenSummary';
+import FundSelection from '../FundSelection';
 
 import {
   input,
@@ -18,22 +19,6 @@ import {
   IOverlayableProps
 } from '@blueprintjs/core';
 import './IndexTokenForm.css';
-
-// Components
-  // Name Your Fund
-  // Select Tokens
-  // Determine Quantity
-
-
-// Create a new Index token
-// Form has inputs: 'Name', 'Symbol', Composition TokenA, Composition Token B
-// Amount A, Amount 2
-// Has ability to Select CompositionToken(s)
-// Create token
-
-// MVP
-// Form for 
-
 
 class IndexTokenForm extends Component {
   constructor(props) {
@@ -103,7 +88,26 @@ class IndexTokenForm extends Component {
           tokens={fieldValues.tokens}
           units={fieldValues.units} 
           saveData={this.saveData}
+          nextStep={this.nextStep}
         />
+      case 5: 
+        return <FundSelection
+          saveData={this.saveData}
+          nextStep={this.nextStep}
+          previousStep={this.previousStep}
+        />
+      // case 6: 
+      //   return <IssueApproval
+      //     saveData={this.saveData}
+      //     nextStep={this.nextStep}
+      //     previousStep={this.previousStep}
+      //   />      
+      // case 7: 
+      //   return <IssueTransfer
+      //     saveData={this.saveData}
+      //     nextStep={this.nextStep}
+      //     previousStep={this.previousStep}
+      //   />      
     }
   }
 }
