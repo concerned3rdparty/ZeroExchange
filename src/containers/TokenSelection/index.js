@@ -11,6 +11,7 @@ class TokenSelection extends Component {
       tokens: this.props.tokens
     };
 
+    this.addToken = this.addToken.bind(this);
     this.removeToken = this.removeToken.bind(this);
     this.saveAndContinue = this.saveAndContinue.bind(this);
   }
@@ -20,8 +21,8 @@ class TokenSelection extends Component {
     // and populate it into tokenData
   }
 
-  addToken() {
-    // Fetch new token data and add it to our tokens
+  addToken(tokenAddress) {
+    console.log(tokenAddress);
   }
 
   removeToken(tokenAddress) {
@@ -47,7 +48,7 @@ class TokenSelection extends Component {
       <div>
         <Grid>
           <Row>
-            <TokenDropdown />
+            <TokenDropdown select={this.addToken} />
           </Row>
           <Row>
             <Table>
