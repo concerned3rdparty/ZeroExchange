@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import contract from 'truffle-contract'; 
+import contract from 'truffle-contract';
 
 import { Grid, Row, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Table } from 'react-bootstrap';
 
-const IndexFund = require('../../helpers/IndexFund.json');
+const IndexFund = require('../../helpers/IndexFundHub.json');
 
 // Pick the fund that we'll be working with
 class FundSelection extends Component {

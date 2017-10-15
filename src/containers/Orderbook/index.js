@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Tab, Tabs, TabList, TabPanel } from '@blueprintjs/core';
 import { Table, Column } from '@blueprintjs/table';
 import { connect } from 'react-redux';
 import { initSockets } from '../../redux/orderbook';
@@ -16,7 +17,7 @@ class Orderbook extends Component {
     const { orders, trades, cancels } = this.props.orderbook;
     return (
       <div class='orderbook'>
-        <h2>Orderbook</h2>
+        <h2>Open Orderbook</h2>
         <table class='pt-table pt-striped pt-bordered centered table'>
           <thead>
             <tr>
@@ -30,7 +31,7 @@ class Orderbook extends Component {
           <tbody>
             {orders.map((order, index) =>
               <tr key={index}>
-                <td>{moment(order.timestamp).format('MMM Do - h:mm:ss a')}</td>
+                <td>{moment(order.expirationUnixTimestampSec.toNumber()).format('MMM Do YYYY - h:mm:ss a')}</td>
                 <td>{order.maker}</td>
                 <td>{order.makerTokenAmount.toString()}</td>
                 <td>{order.makerTokenAmount.toNumber() / order.takerTokenAmount.toNumber()} ZRX/WETH</td>

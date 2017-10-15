@@ -111,7 +111,7 @@ class Form extends Component {
     var self = this;
     var order = {
       exchangeContractAddress: '0x90fe2af704b34e0224bf2299c838e04d4dcf1364',
-      expirationUnixTimestampSec: new BigNumber((Date.now() / 1000) + 3600),
+      expirationUnixTimestampSec: new BigNumber((Date.now()) + 3600*1000),
       feeRecipient: '0xefa1958b3248a95c08f0a964ad844848f1d7e0a3',
       maker: makerAddress,
       makerFee: new BigNumber(0),
@@ -149,7 +149,6 @@ class Form extends Component {
       .then(function (result) {
         // Publish the order to the orderbook
         console.log('Order being submitted to zero exchange...', order);
-        order.timestamp = Date.now();
         client.event.emit('orders', order);
       })
       .catch(function (err) {
