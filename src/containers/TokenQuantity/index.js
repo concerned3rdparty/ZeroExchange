@@ -12,56 +12,62 @@ class TokenQuantity extends Component {
     }
 
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
+    this.saveAndContinue = this.saveAndContinue.bind(this);
   }
 
-  handleQuantityChange(e) {
-    var newValue = e.target.value;
-    var currentIndex = e.target.index;
-    console.log('index', currentIndex, e.target);
+  handleQuantityChange(index, e) {
+    if (!e.target.value ) return;
+
+    var newValue = parseInt(e.target.value);
 
     var currentUnits = this.props.units;
-    currentUnits[currentIndex] = newValue;
-    console.log('Intermediate', currentUnits);
+    currentUnits[index] = newValue;
 
     this.setState({ units: currentUnits });
-    console.log('New State', this.state.units)
   }
 
   // Take the current selected tokens
   // Add unit selections for each token in the basket
 
-  submitAndContinue() {
-    // Transform the quantity/unit in each token 
-    // And form it into an array
+  saveAndContinue(e) {
+    e.preventDefault();
 
+    var data = this.state.units;
 
-    // Move forward
+    this.props.saveData(data);
+    this.props.nextStep();
   }
 
   render () {
     return (
       <div> 
        <Grid>
-        {this.state.tokens.map((token, index) => 
-          <Well key={index}>
-            <form>
-              <FormGroup
-                controlId="formBasicText">
-                <label>Token Name</label>
-                <div>{token.name}</div>
-              </FormGroup>
-              <FormGroup>
-                <ControlLabel>Symbol</ControlLabel>
-                <FormControl
-                  type="text"
-                  index={index}
-                  value={this.state.units[index]}
-                  placeholder="0"
-                  onChange={this.handleQuantityChange}
-                />
-              </FormGroup>              
-            </form>
-          </Well>)}
+        <Row>
+          {this.state.tokens.map((token, index) => 
+            <Well key={index}>
+              <form>
+                <FormGroup
+                  controlId="formBasicText">
+                  <label>Token Name</label>
+                  <div>{token.name}</div>
+                </FormGroup>
+                <FormGroup>
+                  <ControlLabel>Symbol</ControlLabel>
+                  <FormControl
+                    type="text"
+                    index={index}
+                    value={this.state.units[index]}
+                    placeholder="0"
+                    onChange={(e) => this.handleQuantityChange(index, e)}
+                  />
+                </FormGroup>              
+              </form>
+            </Well>)}
+          </Row>
+          <Row>
+            <Button onClick={this.props.previousStep}>Go Back</Button>
+            <Button onClick={this.saveAndContinue}>Save and Continue</Button>
+          </Row>
        </Grid>
       </div>
     );

@@ -29,7 +29,8 @@ export function initWeb3 (dispatch) {
     } else {
         // We could dispatch our own web3 provider here if we wanted to ...
         console.log('No web3? You should consider trying MetaMask!');
-        dispatch(disconnectWeb3());
+        window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+        dispatch(connectWeb3());
     }
 
 }
