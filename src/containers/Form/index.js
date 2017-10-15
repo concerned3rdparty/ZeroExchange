@@ -14,6 +14,7 @@ import {
 import './Form.css';
 import * as classNames from 'classnames';
 import { connect } from 'react-redux';
+import client from '../../helpers/socket';
 const ZeroEx = require('0x.js').ZeroEx;
 const BigNumber = require('bignumber.js');
 var makerAddress = '';
@@ -108,6 +109,20 @@ class Form extends Component {
 
   submitOrder () {
     var self = this;
+    var order = {
+      exchangeContractAddress: '0x90fe2af704b34e0224bf2299c838e04d4dcf1364',
+      expirationUnixTimestampSec: new BigNumber((Date.now() / 1000) + 3600),
+      feeRecipient: '0xefa1958b3248a95c08f0a964ad844848f1d7e0a3',
+      maker: makerAddress,
+      makerFee: new BigNumber(0),
+      makerTokenAddress: '0x6ff6c0ff1d68b964901f986d4c9fa3ac68346570',
+      makerTokenAmount: new BigNumber(1000),
+      salt: new BigNumber(0),
+      taker: ZeroEx.NULL_ADDRESS,
+      takerFee: new BigNumber(0),
+      takerTokenAddress: '0x05d090b51c40b020eab3bfcb6a2dff130df22e9c',
+      takerTokenAmount: new BigNumber(1)
+    };
     return window.web3.eth.net.getId()
       .then(function (network) {
         // Check For Rovan Network
@@ -115,23 +130,8 @@ class Form extends Component {
           self.setState({
             loading: true
           });
-          // Create a new order
-          var expiration = new BigNumber((Date.now() / 1000) + 3600);
-          var orderHash = ZeroEx.getOrderHashHex({
-          	exchangeContractAddress: '0x90fe2af704b34e0224bf2299c838e04d4dcf1364',
-          	expirationUnixTimestampSec: expiration,
-          	feeRecipient: '0xefa1958b3248a95c08f0a964ad844848f1d7e0a3',
-          	maker: makerAddress,
-          	makerFee: new BigNumber(0),
-          	makerTokenAddress: '0x6ff6c0ff1d68b964901f986d4c9fa3ac68346570',
-          	makerTokenAmount: new BigNumber(1000),
-          	salt: new BigNumber(0),
-          	taker: ZeroEx.NULL_ADDRESS,
-          	takerFee: new BigNumber(0),
-          	takerTokenAddress: '0x05d090b51c40b020eab3bfcb6a2dff130df22e9c',
-          	takerTokenAmount: new BigNumber(1)
-          });
-          // Sign the order
+          // Create and sign new order
+          var orderHash = ZeroEx.getOrderHashHex(order);
           return window.zeroEx.signOrderHashAsync(orderHash, makerAddress);
         } else {
           self.setState({
@@ -141,9 +141,16 @@ class Form extends Component {
         }
       })
       .then(function (result) {
-        // Submit the order to the data channel
-        console.log('Congrats! Here is your signed order', result);
-
+        // Approve transfer of tokens to the proxy contract
+        order = Object.assign(order, result);
+        console.log('Congrats! Here is your signed order', order);
+        return window.zeroEx.token.setUnlimitedProxyAllowanceAsync('0x6ff6c0ff1d68b964901f986d4c9fa3ac68346570', makerAddress);
+      })
+      .then(function (result) {
+        // Publish the order to the orderbook
+        console.log('Order being submitted to zero exchange...', order);
+        order.timestamp = Date.now();
+        client.event.emit('orders', order);
       })
       .catch(function (err) {
         console.log(err);
@@ -155,4 +162,7 @@ class Form extends Component {
   }
 }
 
-export default Form;
+export default connect(
+  null,
+  null
+)(Form);
