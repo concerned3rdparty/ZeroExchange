@@ -12,7 +12,8 @@ import {
   IOverlayableProps
 } from '@blueprintjs/core';
 import './Form.css';
-import * as classNames from "classnames";
+import * as classNames from 'classnames';
+import { connect } from 'react-redux';
 
 class Form extends Component {
 
@@ -26,6 +27,21 @@ class Form extends Component {
     };
     this.submitOrder = this.submitOrder.bind(this);
     this.toggleDialog = this.toggleDialog.bind(this);
+  }
+
+  componentDidMount () {
+    var self = this;
+    window.web3.eth.getAccounts()
+      .then(function (accounts) {
+        return window.zeroEx.token.getBalanceAsync('0x6ff6c0ff1d68b964901f986d4c9fa3ac68346570', accounts[0].toLowerCase());
+      })
+      .then(function (balance) {
+        var balance = balance.toNumber() / 1000;
+        self.setState({ makerAmount: window.web3.utils.fromWei(balance, 'ether') });
+      })
+      .catch(function (err) {
+        console.log('Failed to get balance', err);
+      });
   }
 
   render () {
@@ -53,9 +69,9 @@ class Form extends Component {
             <input id='makerAmount' value={this.state.makerAmount} class='pt-input pt-round' style={{width: '300px', textAlign: 'center'}} placeholder='Amount of ZRX' type='number' dir='auto' />
             <div class='pt-form-helper-text'>The amount you want to trade</div>
           </div>
-          <Button type='button' class='pt-button pt-intent-success pt-large' onClick={this.submitOrder}>
+          <button type='button' class='pt-button pt-default pt-large' onClick={this.submitOrder}>
             Submit Request
-          </Button>
+          </button>
           <div class='pt-form-group'>
             <label class='pt-label' for='price'>
               Amount Received
@@ -80,23 +96,23 @@ class Form extends Component {
                 text='Close' />
             </div>
           </div>
-      </Dialog>
+        </Dialog>
       </div>
     );
   }
 
   submitOrder () {
     var self = this;
-    return window.web3.eth.net.getNetworkType()
+    return window.web3.eth.net.getId()
       .then(function (data) {
+        console.log('Network', data);
         // Check Correct Network
-        if (data !== 'ropsten') {
+        if (data !== 42) {
           self.setState({
-            message: 'Please connect to the Ropsten network, Main network coming soon!',
+            message: 'Please connect to the Kovan network, Main network coming soon!',
             isOpen: true
           });
-        } else if (data == 'ropsten') {
-
+        } else if (data == 42) {
         } else {
           console.log('Congratulations!', data);
         }
