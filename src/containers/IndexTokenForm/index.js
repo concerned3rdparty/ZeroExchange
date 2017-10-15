@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import TokenName from '../TokenName';
 import TokenSelection from '../TokenSelection';
 import TokenQuantity from '../TokenQuantity';
+import TokenCreationSuccess from '../TokenCreationSuccess';
 
 import {
   input,
@@ -88,10 +89,18 @@ class IndexTokenForm extends Component {
           previousStep={this.previousStep}
         />
       case 3: 
-        return <TokenQuantity 
+        return <TokenQuantity
+          tokens={fieldValues.tokens}
+          units={fieldValues.units} 
           saveData={this.saveData}
           nextStep={this.nextStep}
           previousStep={this.previousStep}
+        />
+      case 4: 
+        return <TokenCreationSuccess
+          tokens={fieldValues.tokens}
+          units={fieldValues.units} 
+          saveData={this.saveData}
         />
     }
   }

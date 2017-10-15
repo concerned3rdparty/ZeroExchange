@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 
 import TokenDropdown from '../TokenDropdown';
-
 import { Grid, Row, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Table } from 'react-bootstrap';
+const ERC20 = require('../../helpers/tokens.json');
+
+var contract = require("truffle-contract");
+var ERC20Contract;
 
 class TokenSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      ERC20instance: '',
       tokens: this.props.tokens
     };
 
@@ -19,10 +23,23 @@ class TokenSelection extends Component {
   componentWillMount() {
     // Using the token information, get other metadata
     // and populate it into tokenData
+    // For each token, populate the data
+    // LEAVE THIS 
   }
 
-  addToken(tokenAddress) {
-    console.log(tokenAddress);
+  async addToken(tokenAddress) {
+    // console.log(window.web3);
+    // ERC20Contract = contract(ERC20)
+    // ERC20Contract.setProvider(window.web3.currentProvider);
+
+    // const instance = await ERC20Contract.at(tokenAddress);
+    
+    // // Fetch token information
+    // console.log(instance);
+
+    // Push token to the tokens
+    let updatedTokens = this.state.tokens;
+    this.setState({ tokens: updatedTokens });
   }
 
   removeToken(tokenAddress) {
@@ -37,7 +54,7 @@ class TokenSelection extends Component {
   saveAndContinue(e) {
     e.preventDefault();
 
-    var data = this.state;
+    var data = this.state.tokens;
 
     this.props.saveData(data);
     this.props.nextStep();
