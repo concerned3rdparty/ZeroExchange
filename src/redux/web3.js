@@ -3,8 +3,8 @@
  */
 
 import Web3 from 'web3';
+import { ZeroEx } from '0x.js';
 import { emptyActionGenerator } from './helpers';
-
 
 // Actions
 const CONNECTED = 'web3/CONNECTED';
@@ -12,7 +12,6 @@ const DISCONNECTED = 'web3/DISCONNECTED';
 
 const connectWeb3 = emptyActionGenerator(CONNECTED);
 const disconnectWeb3 = emptyActionGenerator(DISCONNECTED);
-
 
 // Public Action
 export function initWeb3 (dispatch) {
@@ -25,6 +24,7 @@ export function initWeb3 (dispatch) {
         // // Use Mist/MetaMask's provider
         console.log('Mist detected', web3.currentProvider);
         window.web3 = new Web3(web3.currentProvider);
+        window.zeroEx = new ZeroEx(web3.currentProvider);
         dispatch(connectWeb3());
     } else {
         // We could dispatch our own web3 provider here if we wanted to ...

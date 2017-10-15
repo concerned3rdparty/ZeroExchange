@@ -1,0 +1,11 @@
+.metamask-logo {
+  animation: metamask-logo-spin infinite 20s linear;
+  height: 80px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+@keyframes metamask-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
