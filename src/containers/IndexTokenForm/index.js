@@ -48,7 +48,7 @@ class IndexTokenForm extends Component {
           { address: '0x6810e776880c02933d47db1b9fc05908e5386b96', name: "Gnosis", symbol: 'GNO' }, 
           { address: '0xe94327d07fc17907b4db788e5adf2ed424addff6', name: "Augur", symbol: 'REP' }
         ],
-        units: [1, 2]
+        units: [0, 0]
       }
     }
 
