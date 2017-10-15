@@ -5,6 +5,8 @@ import TokenSelection from '../TokenSelection';
 import TokenQuantity from '../TokenQuantity';
 import TokenSummary from '../TokenSummary';
 import FundSelection from '../FundSelection';
+import IssueApproval from '../IssueApproval';
+// import IssueTransfer from '../IssueTransfer';
 
 import {
   input,
@@ -34,19 +36,26 @@ class IndexTokenForm extends Component {
           { address: '0xe94327d07fc17907b4db788e5adf2ed424addff6', name: "Augur", symbol: 'REP' }
         ],
         units: [1, 2]
-      }
+      },
+      selectedIndexFund: null
     }
 
-    this.saveData = this.saveData.bind(this); 
+    this.saveFieldData = this.saveFieldData.bind(this); 
+    this.saveIndexFund = this.saveIndexFund.bind(this); 
     this.nextStep = this.nextStep.bind(this);
     this.previousStep = this.previousStep.bind(this);
   }
 
-  saveData(data) {
+  saveFieldData(data) {
     var oldData = this.state.fieldValues;
     var newData = Object.assign({}, oldData, data);
     this.setState({ fieldValues: newData });
   }
+
+  saveIndexFund(data) {
+    this.setState({ selectedIndexFund: data });
+  }  
+
   nextStep() {
     this.setState({ steps: this.state.steps + 1 });
   }
@@ -63,13 +72,13 @@ class IndexTokenForm extends Component {
         return <TokenName 
           name={fieldValues.name}
           symbol={fieldValues.symbol}
-          saveData={this.saveData}
+          saveData={this.saveFieldData}
           nextStep={this.nextStep}
         />
       case 2: 
         return <TokenSelection
           tokens={fieldValues.tokens}
-          saveData={this.saveData}
+          saveData={this.saveFieldData}
           nextStep={this.nextStep}
           previousStep={this.previousStep}
         />
@@ -77,7 +86,7 @@ class IndexTokenForm extends Component {
         return <TokenQuantity
           tokens={fieldValues.tokens}
           units={fieldValues.units} 
-          saveData={this.saveData}
+          saveData={this.saveFieldData}
           nextStep={this.nextStep}
           previousStep={this.previousStep}
         />
@@ -87,21 +96,21 @@ class IndexTokenForm extends Component {
           symbol={fieldValues.symbol}
           tokens={fieldValues.tokens}
           units={fieldValues.units} 
-          saveData={this.saveData}
+          saveData={this.saveFieldData}
           nextStep={this.nextStep}
         />
       case 5: 
         return <FundSelection
-          saveData={this.saveData}
+          saveData={this.saveIndexFund}
           nextStep={this.nextStep}
           previousStep={this.previousStep}
         />
-      // case 6: 
-      //   return <IssueApproval
-      //     saveData={this.saveData}
-      //     nextStep={this.nextStep}
-      //     previousStep={this.previousStep}
-      //   />      
+      case 6: 
+        return <IssueApproval
+          selectedFund={this.state.selectedIndexFund}
+          nextStep={this.nextStep}
+          previousStep={this.previousStep}
+        />      
       // case 7: 
       //   return <IssueTransfer
       //     saveData={this.saveData}
