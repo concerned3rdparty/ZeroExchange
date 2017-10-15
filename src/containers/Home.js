@@ -23,7 +23,7 @@ class Home extends Component {
         {connected ?
           <div>
             <Form />
-            <Orderbook />
+            <Orderbook orderbook={this.props.orderbook} />
           </div>
         : <Loading />}
       </div>
@@ -32,8 +32,10 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
-    web3: state.web3
+    web3: state.web3,
+    orderbook: state.orderbook
   };
 };
 
