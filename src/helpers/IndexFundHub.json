@@ -283,8 +283,95 @@
       "links": {},
       "address": "0x43bc9f424a9bd0dd87b2df801fc137b8d5c879ec",
       "updated_at": 1508050217020
+    },
+    "1508051990911": {
+      "events": {
+        "0x74a036fd8a1eb4cf4e49ea75e7bd7333fc85a49f12dd6cab69ce7d842097f5e9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "newIndexFund",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "tokens",
+              "type": "address[]"
+            },
+            {
+              "indexed": false,
+              "name": "units",
+              "type": "uint256[]"
+            }
+          ],
+          "name": "IndexFundCreated",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xde09876fac677bf0a04d4cf365e0fed381b70f13",
+      "updated_at": 1508055903963
+    },
+    "1508062945372": {
+      "events": {
+        "0x74a036fd8a1eb4cf4e49ea75e7bd7333fc85a49f12dd6cab69ce7d842097f5e9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "newIndexFund",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "tokens",
+              "type": "address[]"
+            },
+            {
+              "indexed": false,
+              "name": "units",
+              "type": "uint256[]"
+            }
+          ],
+          "name": "IndexFundCreated",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xc520423affe626df005b572d5979b27f369ad49f",
+      "updated_at": 1508062957999
+    },
+    "1508063075206": {
+      "events": {
+        "0x74a036fd8a1eb4cf4e49ea75e7bd7333fc85a49f12dd6cab69ce7d842097f5e9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "newIndexFund",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "tokens",
+              "type": "address[]"
+            },
+            {
+              "indexed": false,
+              "name": "units",
+              "type": "uint256[]"
+            }
+          ],
+          "name": "IndexFundCreated",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x01fb6b856853f7e3fba2f4f5d35d29befe6a1414",
+      "updated_at": 1508063082692
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1508050217020
+  "updated_at": 1508063082692
 }

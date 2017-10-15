@@ -32,8 +32,8 @@ class IndexTokenForm extends Component {
         name: 'PredictionIndexToken',
         symbol: 'PIT',
         tokens: [
-          { address: '0x6810e776880c02933d47db1b9fc05908e5386b96', name: "Gnosis", symbol: 'GNO' }, 
-          { address: '0xe94327d07fc17907b4db788e5adf2ed424addff6', name: "Augur", symbol: 'REP' }
+          { address: '0x6fcdcb587ee39b74bcfb57559262358d2a25816d', name: "Gnosis", symbol: 'GNO' }, 
+          { address: '0x3f8d02f85bf5dc17c5fb83a73ca8c34c1ef06d0f', name: "Augur", symbol: 'REP' }
         ],
         units: [1, 2]
       },

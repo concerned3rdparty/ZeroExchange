@@ -3,7 +3,7 @@ import contract from 'truffle-contract';
 
 import { Grid, Row, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Table } from 'react-bootstrap';
 
-var deployedIndexFundHubContractAddress = '0xde09876fac677bf0a04d4cf365e0fed381b70f13';
+var deployedIndexFundHubContractAddress = '0xbe9f7b40a187f488f7a12cc4dbf2df922a3e2be8';
 
 const IndexFundHub = require('../../helpers/IndexFundHub.json');
 
@@ -41,6 +41,7 @@ class TokenSummary extends Component {
     const createReceipt = await indexFundInstance.create(transformedTokens, units, name, symbol, { from: this.state.account });
 
     this.setState({ indexFundAddress: createReceipt.logs[0].args.newIndexFund });
+    console.log('New Index Fund', createReceipt.logs[0].args.newIndexFund);
   }
 
   render () {
@@ -79,7 +80,6 @@ class TokenSummary extends Component {
             </div>
             : ''}
         </Row>
-        <Button onClick={this.props.nextStep}>Proceed to Issuing Token</Button>
       </Grid>
     );
   }

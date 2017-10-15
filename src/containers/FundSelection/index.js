@@ -3,7 +3,7 @@ import contract from 'truffle-contract';
 
 import { Grid, Row, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Table } from 'react-bootstrap';
 
-const IndexFund = require('../../helpers/IndexFundHub.json');
+const IndexFund = require('../../helpers/IndexFund.json');
 
 // Pick the fund that we'll be working with
 class FundSelection extends Component {
@@ -35,6 +35,8 @@ class FundSelection extends Component {
 
     let indexFundInstance = await IndexFundContract.at(this.state.address);
     this.setState({ fundInstance: indexFundInstance });
+
+    console.log('Index Fund Instance', indexFundInstance);
 
     let indexFundName = await indexFundInstance.name();
     this.setState({ name: indexFundName })
