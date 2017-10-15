@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import TokenName from '../TokenName';
 import TokenSelection from '../TokenSelection';
 import TokenQuantity from '../TokenQuantity';
-import TokenCreationSuccess from '../TokenCreationSuccess';
+import TokenSummary from '../TokenSummary';
 
 import {
   input,
@@ -48,7 +48,7 @@ class IndexTokenForm extends Component {
           { address: '0x6810e776880c02933d47db1b9fc05908e5386b96', name: "Gnosis", symbol: 'GNO' }, 
           { address: '0xe94327d07fc17907b4db788e5adf2ed424addff6', name: "Augur", symbol: 'REP' }
         ],
-        units: [0, 0]
+        units: [1, 2]
       }
     }
 
@@ -97,7 +97,9 @@ class IndexTokenForm extends Component {
           previousStep={this.previousStep}
         />
       case 4: 
-        return <TokenCreationSuccess
+        return <TokenSummary
+          name={fieldValues.name}
+          symbol={fieldValues.symbol}
           tokens={fieldValues.tokens}
           units={fieldValues.units} 
           saveData={this.saveData}
