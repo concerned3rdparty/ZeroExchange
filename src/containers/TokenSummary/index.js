@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import contract from 'truffle-contract'; 
+import contract from 'truffle-contract';
 
 import { Grid, Row, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Table } from 'react-bootstrap';
 
 var deployedIndexFundHubContractAddress = '0xbe9f7b40a187f488f7a12cc4dbf2df922a3e2be8';
 
-const IndexFundHub = require('../../helpers/IndexFundHub.json');
+const IndexFundHub = require('../../helpers/IndexFund.json');
 
 class TokenSummary extends Component {
 
@@ -60,20 +60,20 @@ class TokenSummary extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.tokens.map((token, index) => 
+              {this.state.tokens.map((token, index) =>
               <tr key={token.name}>
                 <td>{token.name}</td>
                 <td>{token.symbol}</td>
                 <td>{this.state.units[index]}</td>
               </tr>)}
-            </tbody>              
+            </tbody>
           </Table>
         </Row>
         <Row>
           <Button onClick={this.submit}>Create Your Portfolio!</Button>
         </Row>
         <Row>
-          {this.state.indexFundAddress.length ? 
+          {this.state.indexFundAddress.length ?
             <div>
               <p>New Index Fund Address: {this.state.indexFundAddress}</p>
               <Button onClick={this.props.nextStep}>Proceed to Issuing Token</Button>

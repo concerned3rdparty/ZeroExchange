@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  input,
+  NumericInput,
   select,
   label,
   Icon,
@@ -28,10 +28,11 @@ class Form extends Component {
       openModal: false,
       loading: false,
       makerAmount: '',
-      takerAmount: ''
+      takerAmount: 1
     };
     this.submitOrder = this.submitOrder.bind(this);
     this.toggleDialog = this.toggleDialog.bind(this);
+    this.changeMakerAmount = this.changeMakerAmount.bind(this);
   }
 
   componentDidMount () {
@@ -72,8 +73,15 @@ class Form extends Component {
             <label class='pt-label' for='makerAmount'>
               Amount Sent
             </label>
-            <input id='makerAmount' value={this.state.makerAmount} class='pt-input pt-round' style={{width: '300px', textAlign: 'center'}} placeholder='Amount of ZRX' type='number' dir='auto' />
-            <div class='pt-form-helper-text'>The amount you want to trade</div>
+            <NumericInput
+              id='makerAmount'
+              style={{width: '300px', textAlign: 'center'}}
+              placeholder='Amount of ZRX'
+              class='pt-input pt-round'
+              large={true}
+              onValueChange={this.changeMakerAmount}
+              value={this.state.makerAmount} />
+            <div class='pt-form-helper-text'>The amount of ZRX you want to trade</div>
           </div>
           <button loading={this.state.loading} class='pt-button pt-large' onClick={this.submitOrder}>
             Submit Request
@@ -83,7 +91,7 @@ class Form extends Component {
               Amount Received
             </label>
             <input id='takerAmount' disabled value={this.state.takerAmount} class='pt-input pt-round' style={{width: '300px', textAlign: 'center'}} placeholder='Amount of WETH' type='number' dir='auto' />
-            <div class='pt-form-helper-text'>Estimated best price</div>
+            <div class='pt-form-helper-text'>Estimated best price of 1000 ZRX / 1 WETH</div>
           </div>
         </div>
         <Dialog
@@ -107,6 +115,10 @@ class Form extends Component {
     );
   }
 
+  changeMakerAmount (amount) {
+    this.setState({makerAmount: amount});
+  }
+
   submitOrder () {
     var self = this;
     var order = {
@@ -121,7 +133,7 @@ class Form extends Component {
       taker: ZeroEx.NULL_ADDRESS,
       takerFee: new BigNumber(0),
       takerTokenAddress: '0x05d090b51c40b020eab3bfcb6a2dff130df22e9c',
-      takerTokenAmount: new BigNumber(1)
+      takerTokenAmount: new BigNumber(self.state.takerAmount)
     };
     return window.web3.eth.net.getId()
       .then(function (network) {

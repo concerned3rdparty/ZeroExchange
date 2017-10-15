@@ -1,5 +1,6 @@
 import { payloadActionGenerator } from './helpers';
 import client from '../helpers/socket';
+const BigNumber = require('bignumber.js');
 
 // Actions
 const ORDERCREATED = 'socket/ORDERCREATED';
@@ -16,6 +17,9 @@ export function initSockets (dispatch, data) {
   // New order action
   client.event.subscribe('orders', function (data) {
     console.log('New order!', data);
+    data.expirationUnixTimestampSec = new BigNumber(data.expirationUnixTimestampSec);
+    data.makerTokenAmount = new BigNumber(data.makerTokenAmount);
+    data.takerTokenAmount = new BigNumber(data.takerTokenAmount);
     return dispatch(orderCreated(data));
   });
   // Filled order action
