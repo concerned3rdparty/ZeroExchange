@@ -14,6 +14,9 @@ import {
 import './Form.css';
 import * as classNames from 'classnames';
 import { connect } from 'react-redux';
+const ZeroEx = require('0x.js').ZeroEx;
+const BigNumber = require('bignumber.js');
+var makerAddress = '';
 
 class Form extends Component {
 
@@ -22,6 +25,7 @@ class Form extends Component {
     this.state = {
       message: '',
       openModal: false,
+      loading: false,
       makerAmount: '',
       takerAmount: ''
     };
@@ -33,6 +37,7 @@ class Form extends Component {
     var self = this;
     window.web3.eth.getAccounts()
       .then(function (accounts) {
+        makerAddress = accounts[0].toLowerCase();
         return window.zeroEx.token.getBalanceAsync('0x6ff6c0ff1d68b964901f986d4c9fa3ac68346570', accounts[0].toLowerCase());
       })
       .then(function (balance) {
@@ -69,7 +74,7 @@ class Form extends Component {
             <input id='makerAmount' value={this.state.makerAmount} class='pt-input pt-round' style={{width: '300px', textAlign: 'center'}} placeholder='Amount of ZRX' type='number' dir='auto' />
             <div class='pt-form-helper-text'>The amount you want to trade</div>
           </div>
-          <button type='button' class='pt-button pt-default pt-large' onClick={this.submitOrder}>
+          <button loading={this.state.loading} class='pt-button pt-large' onClick={this.submitOrder}>
             Submit Request
           </button>
           <div class='pt-form-group'>
@@ -104,19 +109,41 @@ class Form extends Component {
   submitOrder () {
     var self = this;
     return window.web3.eth.net.getId()
-      .then(function (data) {
-        console.log('Network', data);
-        // Check Correct Network
-        if (data !== 42) {
+      .then(function (network) {
+        // Check For Rovan Network
+        if (network == 42) {
+          self.setState({
+            loading: true
+          });
+          // Create a new order
+          var expiration = new BigNumber((Date.now() / 1000) + 3600);
+          var orderHash = ZeroEx.getOrderHashHex({
+          	exchangeContractAddress: '0x90fe2af704b34e0224bf2299c838e04d4dcf1364',
+          	expirationUnixTimestampSec: expiration,
+          	feeRecipient: '0xefa1958b3248a95c08f0a964ad844848f1d7e0a3',
+          	maker: makerAddress,
+          	makerFee: new BigNumber(0),
+          	makerTokenAddress: '0x6ff6c0ff1d68b964901f986d4c9fa3ac68346570',
+          	makerTokenAmount: new BigNumber(1000),
+          	salt: new BigNumber(0),
+          	taker: ZeroEx.NULL_ADDRESS,
+          	takerFee: new BigNumber(0),
+          	takerTokenAddress: '0x05d090b51c40b020eab3bfcb6a2dff130df22e9c',
+          	takerTokenAmount: new BigNumber(1)
+          });
+          // Sign the order
+          return window.zeroEx.signOrderHashAsync(orderHash, makerAddress);
+        } else {
           self.setState({
             message: 'Please connect to the Kovan network, Main network coming soon!',
             isOpen: true
           });
-        } else if (data == 42) {
-        } else {
-          console.log('Congratulations!', data);
         }
-        return;
+      })
+      .then(function (result) {
+        // Submit the order to the data channel
+        console.log('Congrats! Here is your signed order', result);
+
       })
       .catch(function (err) {
         console.log(err);
