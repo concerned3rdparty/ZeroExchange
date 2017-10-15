@@ -43,7 +43,10 @@ class IndexTokenForm extends Component {
       fieldValues: {
         name: 'PredictionIndexToken',
         symbol: 'PIT',
-        tokens: ['0x6810e776880c02933d47db1b9fc05908e5386b96', '0xe94327d07fc17907b4db788e5adf2ed424addff6'],
+        tokens: [
+          { address: '0x6810e776880c02933d47db1b9fc05908e5386b96', name: "Gnosis", symbol: 'GNO' }, 
+          { address: '0xe94327d07fc17907b4db788e5adf2ed424addff6', name: "Augur", symbol: 'REP' }
+        ],
         units: [1, 2]
       }
     }
@@ -79,7 +82,7 @@ class IndexTokenForm extends Component {
         />
       case 2: 
         return <TokenSelection
-          tokens={this.state.tokens}
+          tokens={fieldValues.tokens}
           saveData={this.saveData}
           nextStep={this.nextStep}
           previousStep={this.previousStep}
